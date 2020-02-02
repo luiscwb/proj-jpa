@@ -1,0 +1,15 @@
+server:
+  port: 8181
+spring:
+  datasource:
+    password: luis
+    url: jdbc:mysql://localhost/Backoffice
+    username: root
+  jpa:
+    hibernate:
+      ddl-auto: create
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+    show-sql: true
