@@ -8,18 +8,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jpa.model.Employee;
-import com.jpa.service.ExampleClient;
+import com.jpa.service.EmpolyeeService;
 
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
 
 	@Autowired
-	ExampleClient service;
+	EmpolyeeService service;
 	
 	@GetMapping("/create")
 	public Employee create(Employee emp) {
-		return service.saveEmployees();
+		Employee ret = Employee.create("Caso de erro", "erro", 0);
+		try {
+			return service.saveEmployees();
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ret;
 	}
 	
 	@GetMapping("/find")

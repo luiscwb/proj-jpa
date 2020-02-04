@@ -6,10 +6,8 @@ spring:
     url: jdbc:mysql://localhost/Backoffice
     username: root
   jpa:
+    database-plataform: org.hibernate.dialect.MySQL57InnoDBDialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
       naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL5Dialect
     show-sql: true

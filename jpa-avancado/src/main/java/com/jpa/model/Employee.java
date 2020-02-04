@@ -12,7 +12,7 @@ public class Employee {
 	@GeneratedValue
 	private Long id;
 
-	@Column(unique = true)
+	@Column(name="name", columnDefinition = "varchar(50)", unique = true)
 	private String name;
 
 	public Long getId() {
