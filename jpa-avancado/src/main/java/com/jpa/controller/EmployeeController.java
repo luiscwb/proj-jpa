@@ -3,7 +3,12 @@ package com.jpa.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,11 +22,12 @@ public class EmployeeController {
 	@Autowired
 	EmpolyeeService service;
 	
-	@GetMapping("/create")
-	public Employee create(Employee emp) {
+	
+	@PostMapping("/update")
+	public Employee create(@RequestBody Employee emp) {
 		Employee ret = Employee.create("Caso de erro", "erro", 0);
 		try {
-			return service.saveEmployees();
+			return service.saveEmployee(emp);
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
@@ -29,9 +35,25 @@ public class EmployeeController {
 		return ret;
 	}
 	
+
+	@DeleteMapping("/delete")
+	public void delete(@RequestBody Employee emp) {
+		service.deleteEmployee(emp);
+	}
+	
 	@GetMapping("/find")
 	public List<Employee> findEmployees() {
 		return service.findEmployees();
 	}
+
+	@GetMapping("/findaparams")
+	public List<Employee> findAllWithParams(@Param("nome") String nome, @Param("salario") Integer salario) {
+		return service.findAllWithParams(nome, salario);
+	}
 	
+	@GetMapping("/findapaginacao")
+	public Page<Employee> findAllWithPageble(@Param("numpagina") Integer numpagina) {
+		return service.findAllWithPageble(numpagina);
+	}
+
 }
