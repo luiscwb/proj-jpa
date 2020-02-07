@@ -6,10 +6,14 @@
 //String jpql = "select c from Conta c join fetch c.movimentacoes";
 // Suprimindo comportamento lazy, (n+1), excuta o select com join apenas 1 vez
 
-package com.jpa.repo;
+package com.jpa.employee.repo;
 
 import java.util.List;
 
+import javax.persistence.FetchType;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -17,7 +21,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jpa.model.Employee;
+import com.jpa.employee.model.Employee;
 
 public interface EmployeeRepository extends CrudRepository<Employee, Long> {
 
@@ -26,8 +30,11 @@ public interface EmployeeRepository extends CrudRepository<Employee, Long> {
   <S extends Employee> S save(S s);
   
   //Select costumizado
-  @Query(value = "SELECT * FROM employee u WHERE u.salary = 1000", nativeQuery = true)
-  List<Employee> findAllActiveUsers();
+  // Caso seja necessario retornas os skill para cada employee usar FETCH para executar apenas um select
+  // senao usar FETCH, sera relilizado um select por cada registro de employee para recuperar seus skills
+  // o LEFT deixa como obrigatorio os registros do employee
+  @Query(value = "SELECT e FROM Employee e LEFT JOIN FETCH e.skills s" )
+  List<Employee> findAllUsers();
   
   
   //Usando paginacao do resultado apenas para jpsql, para nativo é diferente

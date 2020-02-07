@@ -1,13 +1,16 @@
-package com.jpa.model;
+package com.jpa.employee.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -25,8 +28,20 @@ public class Employee {
 
 	private int salary;
 
-	@OneToMany
+	//Relacionamento biderecional com Skill usando campo employee dessa classe
+	//Obrigatorio usar cascade para replicar o save nos relacionamentos
+	@OneToMany(
+			fetch = FetchType.LAZY, 
+			mappedBy = "employee", 
+			cascade=CascadeType.ALL
+	) 
 	private List<Skill> skills;
+	
+	
+	
+	//Departament
+	@ManyToMany(fetch = FetchType.LAZY)
+	private List<Departament> departaments;
 	
 	
 	public List<Skill> getSkills() {

@@ -1,7 +1,9 @@
-package com.jpa.controller;
+package com.jpa.employee.controller;
 
 import java.util.List;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
@@ -12,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jpa.model.Employee;
-import com.jpa.service.EmpolyeeService;
+import com.jpa.employee.model.Employee;
+import com.jpa.employee.service.EmpolyeeService;
 
 @RestController
 @RequestMapping("/employee")
@@ -35,10 +37,10 @@ public class EmployeeController {
 		return ret;
 	}
 	
-
+	
 	@DeleteMapping("/delete")
 	public void delete(@RequestBody Employee emp) {
-		service.deleteEmployee(emp);
+		service.deleteEmployee(emp.getId());
 	}
 	
 	@GetMapping("/find")

@@ -1,7 +1,8 @@
-package com.jpa.service;
+package com.jpa.employee.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,9 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jpa.model.Employee;
-import com.jpa.repo.EmployeeRepository;
-import com.jpa.repo.SkillRepository;
+import com.jpa.employee.model.Employee;
+import com.jpa.employee.repo.EmployeeRepository;
 
 @Service
 public class EmpolyeeService {
@@ -20,23 +20,42 @@ public class EmpolyeeService {
 	@Autowired
 	private EmployeeRepository employeeRepo;
 
-	@Autowired
-	private SkillRepository skillRepo;
-
 	public List<Employee> findEmployees() {
-		return employeeRepo.findAllActiveUsers();
+		return employeeRepo.findAllUsers();
 	}
 
 	@Transactional
 	public Employee saveEmployee(Employee emp) {
 
-		emp.getSkills().forEach(e -> skillRepo.save(e));
+		//Para salvar os skills deve ser setado em cada skill o employee que sera salvo
+		emp.getSkills().forEach(e -> e.setEmployee(emp) );
 		employeeRepo.save(emp);
+		
 		return emp;
 	}
 
-	public void deleteEmployee(Employee emp) {
-		employeeRepo.delete(emp);
+
+	//sem sentido
+	public Employee updateEmployee(Employee emp) {
+		Employee ret = null;
+		Optional<Employee> dbemp = employeeRepo.findById(emp.getId());
+		if (dbemp.isPresent()) {
+			dbemp.get().setSkills(null);
+			employeeRepo.save(dbemp.get());
+			ret = dbemp.get();
+		}
+		return ret;
+	}
+		
+
+	
+	
+	// Aapga os registros de employee e em cascata os correspondentes de skill
+	@Transactional
+	public void deleteEmployee(Long id) {
+		Optional<Employee> emp = employeeRepo.findById(id);
+		if (emp.isPresent() ) 
+			employeeRepo.delete(emp.get());
 	}
 
 	public List<Employee> findAllWithParams(String name, Integer salary) {
@@ -50,8 +69,8 @@ public class EmpolyeeService {
 		Pageable pageable = PageRequest.of(numpagina, 5);
 		Page<Employee> result = employeeRepo.findAllWithPageble(pageable);
 
-		int totalPages = result.getTotalPages();
-		long totalElements = result.getTotalElements();
+//		int totalPages = result.getTotalPages();
+//		long totalElements = result.getTotalElements();
 		
 		
 		return result;
