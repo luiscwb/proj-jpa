@@ -25,8 +25,8 @@ public class BookService {
 	public Book saveBookAndPages(Book book, ArrayList<Page> pages) {
 
 		bookRepository.save(book);
-		pages.forEach( p -> book.addPage(p));
-		//pageRepository.save(p); // se utilizar cascade nao preciso excutar o Save
+		pages.forEach( p -> book.addPage(p)); //Aqui esta salvando usando cascate, cuidado com este metodo
+		//pageRepository.save(p); // Aqui savla sem usar cascate, as vezes pode ser mais performatico
 					
 		return null;
 	}

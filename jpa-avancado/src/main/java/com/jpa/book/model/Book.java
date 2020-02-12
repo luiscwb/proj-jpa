@@ -34,10 +34,13 @@ public class Book {
     	this.pages.add(p);
     }
 
-    public Book(String name, String author) {
-        this.name = name;
-        this.author = author;
-        this.pages = new ArrayList<>();
+    
+    public static Book createInstance(String name, String author) {
+    	Book book = new Book();
+    	book.name = name;
+        book.author = author;
+        book.pages = new ArrayList<>();
+        return book;    	
     }
 
     

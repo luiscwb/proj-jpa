@@ -30,11 +30,13 @@ public class TestingBookApplicationTest {
 	
 	@Test
 	public void testInsert() throws Exception {
-		Book book = new Book("La casa del pepe", "Pepe Mujica");
+		Book book = Book.createInstance("La casa del pepe", "Pepe Mujica");
 		ArrayList<Page> pages = new ArrayList<>();
-		pages.add(new Page("Pagina1", 1, book));
-		pages.add(new Page("Pagina2", 2, book));
-		pages.add(new Page("Pagina3", 2, book));
+		// Para criar cada pagena deve ser enviado o book respetivo
+		// Page define o relacionamento, eh a parte forte
+		pages.add(Page.createInstance("Pagina1", 1, book));
+		pages.add(Page.createInstance("Pagina2", 2, book));
+		pages.add(Page.createInstance("Pagina3", 2, book));
 		
 		bookService.saveBookAndPages(book, pages);
 		assertEquals(1, 1);

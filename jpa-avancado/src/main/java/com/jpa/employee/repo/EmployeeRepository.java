@@ -43,7 +43,7 @@ public interface EmployeeRepository extends CrudRepository<Employee, Long> {
 
   
   //Passando parametros com jpql
-  @Query("SELECT e FROM Employee e WHERE e.name = :pname and salary = :psalary")
+  @Query("SELECT e FROM Employee e WHERE e.name = :pname and e.salary = :psalary")
   List<Employee> findAllWithParams(
 		  @Param("pname") String name,
 		  @Param("psalary") Integer salary

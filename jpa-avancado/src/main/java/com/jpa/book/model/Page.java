@@ -62,12 +62,18 @@ public class Page{
 		this.book = book;
 	}
 
-    public Page(String title, Integer number, Book book) {
-		this.title = title;
-		this.number = number;
-		this.book = book;
-	}
-
+ 
+	// Para criar uma instancia de Page deve ser passado um book como parametro
+	// Page eh a parte forte, quem define o relacionamento
+    public static Page createInstance(String title, Integer number, Book book) {
+		Page page = new Page();
+    	page.title = title;
+		page.number = number;
+		page.book = book;
+    	return page;
+    }
+    
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
