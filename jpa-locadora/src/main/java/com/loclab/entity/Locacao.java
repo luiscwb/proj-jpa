@@ -1,20 +1,20 @@
-package com.loclab.model;
+package com.loclab.entity;
 
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"cliente_id", "espaco_id"})})//So uma locacao por cleinte do mesmo espaco
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"cliente_id", "local_id"})})//So uma locacao por cleinte do mesmo local
 public class Locacao {
 
 	@Id
@@ -28,19 +28,20 @@ public class Locacao {
 	private Date dataFinal;
 	
 	//Relacao bidrecional com Cliente:
-	@ManyToOne//(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY) //Importante para nao gerar inner join desnecessario
 	@JoinColumn(name = "cliente_id", nullable = false)
 	private Cliente cliente;
 
-	//Relacao bidirecional com Espaco
-	@ManyToOne//(fetch = FetchType.LAZY)
-	@JoinColumn(name = "espaco_id", nullable = false)
-	private Espaco espaco;
+	//Relacao bidirecional com Local
+	@ManyToOne(fetch = FetchType.LAZY) //Importante para nao gerar inner join desnecessario
+	@JoinColumn(name = "local_id", nullable = false)
+	private Local local;
 	
-	public static Locacao createInstance(Cliente cliente, Espaco espaco, Date dtIni, Date dtFim) {
+	// O id melhor deixar ser gerenciado pelo Hibarnate
+	public static Locacao createInstance(Cliente cliente, Local local, Date dtIni, Date dtFim) {
 		Locacao locacao = new Locacao();
 		locacao.cliente = cliente;
-		locacao.espaco = espaco;
+		locacao.local = local;
 		locacao.setDataInicial(dtIni);
 		locacao.setDataFinal(dtFim);
 		return locacao;
@@ -51,12 +52,12 @@ public class Locacao {
 		return id;
 	}
 
-	public Espaco getEspaco() {
-		return espaco;
+	public Local getLocal() {
+		return local;
 	}
 
-	public void setEspaco(Espaco espaco) {
-		this.espaco = espaco;
+	public void setLocal(Local local) {
+		this.local = local;
 	}
 
 	public void setLocacaoId(Long locacaoId) {

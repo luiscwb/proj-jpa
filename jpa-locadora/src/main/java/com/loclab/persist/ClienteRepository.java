@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-import com.loclab.model.Cliente;
+import com.loclab.entity.Cliente;
 
 public interface ClienteRepository extends CrudRepository<Cliente, Long> {
 

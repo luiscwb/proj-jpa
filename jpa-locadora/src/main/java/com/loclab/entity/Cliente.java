@@ -1,4 +1,4 @@
-package com.loclab.model;
+package com.loclab.entity;
 
 import java.util.Set;
 
