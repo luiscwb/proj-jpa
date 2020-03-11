@@ -13,4 +13,4 @@ spring:
     show-sql: true
 
 cron:
-  expression: "0 0 00 * * ?"
+  expression: "*/10 * * * * *"

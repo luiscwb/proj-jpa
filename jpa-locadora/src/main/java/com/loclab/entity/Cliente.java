@@ -8,7 +8,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -36,13 +35,6 @@ public class Cliente {
 	}
 
 
-
-	public Long getClienteId() {
-		return id;
-	}
-
-	
-	
 	public static Cliente createInstance(String nome, String cpf) {
 		Cliente cliente = new Cliente();		
 		cliente.nome = nome;

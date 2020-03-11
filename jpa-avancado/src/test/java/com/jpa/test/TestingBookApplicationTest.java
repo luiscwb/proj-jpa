@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.servlet.MockMvc;
 
 import com.jpa.book.model.Book;
 import com.jpa.book.model.Page;
@@ -19,8 +18,6 @@ import com.jpa.book.service.BookService;
 @AutoConfigureMockMvc
 public class TestingBookApplicationTest {
 
-	@Autowired
-	private MockMvc mockMvc;
 	
 	@Autowired
 	private BookService bookService;

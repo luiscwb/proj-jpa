@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -84,6 +85,8 @@ public class LocacaoApplicationTest {
 		locais.add(Local.cretateInstance("Av. Republica Argentina 2751", tipoLocais.get(0), 480.30 ));
 		locais.add(Local.cretateInstance("Cardal 1492", tipoLocais.get(2), 300));
 		locais.forEach(loc -> localRepository.save(loc));
+		
+		assertTrue(true);
 
 	}
 
@@ -100,7 +103,7 @@ public class LocacaoApplicationTest {
 		locacoes.add(Locacao.createInstance(clientes.get(1), locais.get(3), gerarData("15/04/2020"), gerarData("02/05/2020")));
 		locacoes.forEach( l -> locacaoRepository.save(l));
 		
-		assertEquals(locacaoRepository.count(), 7);
+		assertEquals(7, locacaoRepository.count());
 	}
 	
 	@Test
@@ -123,7 +126,7 @@ public class LocacaoApplicationTest {
 				gerarData("01/03/2020"), 
 				gerarData("15/03/2020"));
 		
-		assertEquals(loc.size(), 1);
+		assertEquals(1, loc.size());
 	}
 
 	@Test
@@ -132,7 +135,7 @@ public class LocacaoApplicationTest {
 
 		List<Locacao> loc = locacaoRepository.checkAvailability(locais.get(1).getId(), gerarData("01/01/2020"), gerarData("04/02/2020"));
 		
-		assertEquals(loc.size(), 0);
+		assertEquals(0, loc.size());
 	}
 
 	@Test
@@ -141,7 +144,7 @@ public class LocacaoApplicationTest {
 
 		List<Locacao> loc = locacaoRepository.checkAvailability(locais.get(2).getId(), gerarData("01/01/2020"), gerarData("04/03/2020"));
 		
-		assertNotEquals(loc.size(), 0);
+		assertNotEquals(0, loc.size());
 		
 	}
 
@@ -162,7 +165,7 @@ public class LocacaoApplicationTest {
 	@Order(8)
 	public void cancelarReserva() throws Exception {
 		locacaoService.cancelarReserva(locacoes.get(3));
-		assertEquals(locacaoRepository.existsById(locacoes.get(3).getId()), false);
+		assertEquals(false, locacaoRepository.existsById(locacoes.get(3).getId()));
 	}
 
 	@Test
@@ -185,7 +188,7 @@ public class LocacaoApplicationTest {
 				gerarData("11/03/2020"), 
 				gerarData("01/05/2020"));
 		locbetween.forEach( l -> System.out.println( l.getDataInicial() + " ate " + l.getDataFinal()) );
-		assertNotEquals(locbetween.size(), 0);
+		assertNotEquals(0, locbetween.size());
 	}
 	
 	
@@ -193,7 +196,7 @@ public class LocacaoApplicationTest {
 	@Order(11)
 	public void findByCpf() throws Exception {
 		Cliente cliente = clienteRepository.findByCpf("00933707342");
-		assertEquals(cliente.getNome(), "Oliver Bierhoff");
+		assertEquals("Oliver Bierhoff", cliente.getNome());
 	}
 	
 	
