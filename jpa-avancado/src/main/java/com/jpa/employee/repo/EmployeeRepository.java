@@ -10,10 +10,6 @@ package com.jpa.employee.repo;
 
 import java.util.List;
 
-import javax.persistence.FetchType;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;

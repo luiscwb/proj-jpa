@@ -1,0 +1,13 @@
+server:
+  port: 8181
+spring:
+  datasource:
+    password: luis
+    url: jdbc:mysql://localhost/Stylebook
+    username: root
+  jpa:
+    database-plataform: org.hibernate.dialect.MySQL57InnoDBDialect
+    hibernate:
+      ddl-auto: update
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    show-sql: true
