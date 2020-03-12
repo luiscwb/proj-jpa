@@ -12,6 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 import com.br.stl.model.entity.Cliente;
+import com.br.stl.model.entity.ClienteImagem;
 import com.google.gson.Gson;
 
 public class ClientePostTest {
@@ -24,44 +25,46 @@ public class ClientePostTest {
 	}
 	
 	private static void inserirCliente() {
-		Cliente cli = Cliente.createInstance("Luis Maini Fortes", "00933707339", "41996448025");
-
-		File file = new File("/temp/sap.png");
-		byte[] picInBytes = new byte[(int) file.length()];
-
-		FileInputStream fileInputStream;
-		try {
-			fileInputStream = new FileInputStream(file);
-			fileInputStream.read(picInBytes);
-			fileInputStream.close();
-			//cli.setImagemBase64(Base64.getEncoder().encodeToString(picInBytes));
-			
-			
-			URL url = new URL("http://localhost:8181/api/save");
-			URLConnection con = url.openConnection();
-			HttpURLConnection http = (HttpURLConnection)con;
-			http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-			http.setRequestMethod("POST"); // PUT is another valid option
-			http.setDoOutput(true);
-			
-			Gson gson = new Gson();
-			byte[] out = gson.toJson(cli).getBytes(StandardCharsets.UTF_8);
-			http.setFixedLengthStreamingMode(out.length);
-			http.connect();
-			
-			OutputStream os = http.getOutputStream();
-			os.write(out);
-			os.close();
-			
-			//System.out.print("Status: " + http);
-		
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		Cliente cli = Cliente.createInstance("Luis Maini Fortes", "009337073-39", "41996448025");
+//		ClienteImagem cliImagem;
+//		
+//		File file = new File("/temp/sap.png");
+//		byte[] picInBytes = new byte[(int) file.length()];
+//
+//		FileInputStream fileInputStream;
+//		try {
+//			fileInputStream = new FileInputStream(file);
+//			fileInputStream.read(picInBytes);
+//			fileInputStream.close();
+//			
+//			cliImagem = ClienteImagem.createInstance(cli, Base64.getEncoder().encodeToString(picInBytes) );
+//			
+//			
+//			URL url = new URL("http://localhost:8181/api/saveimg");
+//			URLConnection con = url.openConnection();
+//			HttpURLConnection http = (HttpURLConnection)con;
+//			http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+//			http.setRequestMethod("POST"); // PUT is another valid option
+//			http.setDoOutput(true);
+//			
+//			Gson gson = new Gson();
+//			byte[] out = gson.toJson(cliImagem).getBytes(StandardCharsets.UTF_8);
+//			http.setFixedLengthStreamingMode(out.length);
+//			http.connect();
+//			
+//			OutputStream os = http.getOutputStream();
+//			os.write(out);
+//			os.close();
+//			
+//			//System.out.print("Status: " + http);
+//		
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 
 }

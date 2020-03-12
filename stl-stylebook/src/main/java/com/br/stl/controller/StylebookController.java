@@ -1,6 +1,5 @@
 package com.br.stl.controller;
 
-import java.awt.Image;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.br.stl.model.entity.Cliente;
+import com.br.stl.model.entity.ClienteImagem;
 import com.br.stl.service.StylebookService;
 
 @RestController
@@ -31,6 +31,13 @@ public class StylebookController {
 		//System.out.println("Cliente: " + cli.getNomeCompleto());
 		//System.out.println("Cliente: " + cli.getImagemBase64());
 		service.salvarCliente(cli);
+	}
+
+	@PostMapping("/saveimg")
+	public void salvarClienteImagem( @RequestBody ClienteImagem cliImg) {
+		//System.out.println("Cliente: " + cli.getNomeCompleto());
+		//System.out.println("Cliente: " + cli.getImagemBase64());
+		service.salvarImagem(cliImg);
 	}
 
 

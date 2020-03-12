@@ -8,7 +8,4 @@ import com.br.stl.model.entity.Cliente;
 
 public interface ClienteRepository extends CrudRepository<Cliente, Long> {
 	
-	@Query(value = "SELECT nomeCompleto, cpf, telefone FROM cliente", nativeQuery = true)
-	public Iterable<Cliente> findAll();
-	
 }
