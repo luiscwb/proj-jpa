@@ -1,5 +1,6 @@
 package com.br.stl.controller;
 
+import java.awt.Image;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,4 +32,6 @@ public class StylebookController {
 		//System.out.println("Cliente: " + cli.getImagemBase64());
 		service.salvarCliente(cli);
 	}
+
+
 }

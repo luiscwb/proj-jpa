@@ -34,7 +34,7 @@ public class ClientePostTest {
 			fileInputStream = new FileInputStream(file);
 			fileInputStream.read(picInBytes);
 			fileInputStream.close();
-			cli.setImagemBase64(Base64.getEncoder().encodeToString(picInBytes));
+			//cli.setImagemBase64(Base64.getEncoder().encodeToString(picInBytes));
 			
 			
 			URL url = new URL("http://localhost:8181/api/save");

@@ -36,26 +36,26 @@ public class Cliente {
 	@Column(nullable = false)
 	private String telefone;
 	
-	@JsonIgnore
-	@Lob
-	@Basic(fetch = FetchType.LAZY)
-	private byte[] imagem;
+//	@JsonIgnore
+//	@Lob
+//	@Basic(fetch = FetchType.LAZY)
+//	private byte[] imagem;
 	
-	@JsonInclude
-	@Transient
-	private String imagemBase64;
+//	@JsonInclude
+//	@Transient
+//	private String imagemBase64;
 	
 	
 	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;
 
-	public String getImagemBase64() {
-		return imagemBase64;
-	}
-
-	public void setImagemBase64(String imagemBase64) {
-		this.imagemBase64 = imagemBase64;
-	}
+//	public String getImagemBase64() {
+//		return imagemBase64;
+//	}
+//
+//	public void setImagemBase64(String imagemBase64) {
+//		this.imagemBase64 = imagemBase64;
+//	}
 
 	//Campos obrigaotiros para cirar um cliente
 	public static Cliente createInstance(String nome, String cpf, String telefone) {
@@ -106,13 +106,13 @@ public class Cliente {
 		this.telefone = telefone;
 	}
 
-	public byte[] getImagem() {
-		return imagem;
-	}
-
-	public void setImagem(byte[] imagem) {
-		this.imagem = imagem;
-	}
+//	public byte[] getImagem() {
+//		return imagem;
+//	}
+//
+//	public void setImagem(byte[] imagem) {
+//		this.imagem = imagem;
+//	}
 
 	public Date getDataNascimento() {
 		return dataNascimento;
