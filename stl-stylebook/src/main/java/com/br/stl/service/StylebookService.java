@@ -51,6 +51,7 @@ public class StylebookService {
  	@Transactional
 	public void exlcuirImagemParaCliente(Cliente cli, Imagem img) {
 		repoCliente.delRelationImage( cli.getId(), img.getId() );
+		repoImagem.deleteById( img.getId() );
 	}
  	
  	public void exluirCliente(Cliente cli) {

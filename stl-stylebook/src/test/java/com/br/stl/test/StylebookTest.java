@@ -1,13 +1,13 @@
 package com.br.stl.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
-import java.util.Set;
 
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -36,6 +36,9 @@ public class StylebookTest {
 	@Order(1)
 	public void apagarBase() {
 		service.apagarBase();
+		
+		boolean ok = service.getRepoCliente().count()==0 && service.getRepoImagem().count()==0 && service.getRepoCliente().countImages() == 0;
+		assertTrue(ok);
 	}
 	
 	
@@ -60,7 +63,7 @@ public class StylebookTest {
 		Imagem img;
 		
 		for (int i=1; i<6; i++) {
-			imgBase64 = getBase64Imagem("aurora"+i+".jpg");
+			imgBase64 = getBase64Imagem("aurora"+i+".jpeg");
 			img = Imagem.createInstance("Imagem do Aurora Boeral " + i, imgBase64, Constantes.TIPO_IMAGEM_USUARIO);
 			service.salvarImagem(img);
 		}
@@ -74,22 +77,25 @@ public class StylebookTest {
 	@Test
 	@Order(4)
 	public void associarImagen() {
+		
 		Cliente cli = service.recuperarClientePorCpf("00933707339");
 		service.salvarImagemParaCliente(cli, listImagens.get(0));
 		service.salvarImagemParaCliente(cli, listImagens.get(2));
 		service.salvarImagemParaCliente(cli, listImagens.get(4));
-			
+		boolean ok = service.getRepoCliente().findAllImagesByClientId(cli.getId()).size() == 3;	
 		
 		cli = service.recuperarClientePorCpf("00933707340");
 		service.salvarImagemParaCliente(cli, listImagens.get(1));
 		service.salvarImagemParaCliente(cli, listImagens.get(3));
+		ok = ok && service.getRepoCliente().findAllImagesByClientId(cli.getId()).size() == 2;
 		
-		assertEquals( service.getRepoCliente().countImages(), listImagens.size());
+		assertTrue(ok);
 	}	
+	
 	
 	@Test
 	@Order(5)
-	public void desAssociarImagen() {
+	public void DEAssociarImagen() {
 		Cliente cli = service.recuperarClientePorCpf("00933707339");
 		service.exlcuirImagemParaCliente(cli, listImagens.get(0));
 		
@@ -101,19 +107,24 @@ public class StylebookTest {
 	public void recuperarImagensCliente() {
 		
 		Cliente cli = service.recuperarClientePorCpf("00933707340");
-		Object[][] imagens = service.getRepoCliente().findAllImagesByClientId(cli.getId());
+		List<Imagem> imagens = service.getRepoCliente().findAllImagesByClientId(cli.getId());
+		imagens.forEach( (img) -> System.out.println( img.getDescricao() ) );
 		
-		assertEquals(2, 2);
+		assertEquals(2, imagens.size());
 		
 	}
 	
 	
 	@Test
-	@Order(7)
+	@Order(8)
 	public void apagarCliente() {
 		Cliente cli = service.recuperarClientePorCpf("00933707339");
 		service.exluirCliente(cli);
+		
+		assertEquals( service.getRepoCliente().count(), listClientes.size()-1);
 	}	
+	
+	
 	
 	
 	
@@ -121,7 +132,7 @@ public class StylebookTest {
 	
 	private String getBase64Imagem(String nome) {
 
-		File file = new File("/temp/" + nome);
+		File file = new File("/home/luis/Downloads/" + nome);
 		byte[] picInBytes = new byte[(int) file.length()];
 
 		FileInputStream fileInputStream;

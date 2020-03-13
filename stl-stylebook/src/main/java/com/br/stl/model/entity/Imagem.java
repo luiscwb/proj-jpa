@@ -98,5 +98,18 @@ public class Imagem {
 	public void setHashImagem(String hashImagem) {
 		this.hashImagem = hashImagem;
 	}
+
+	//Importante este construtor para devolver listas de objetos no CRUDREPOSITORY. Nao usar diretamente
+	public Imagem(Long id, String descricao, Date inclussao) {
+		super();
+		this.id = id;
+		this.descricao = descricao;
+		this.inclussao = inclussao;
+	}
+
+	public Imagem() {
+		super();
+	}
+	
 	
 }
