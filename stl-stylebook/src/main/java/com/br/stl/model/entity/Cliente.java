@@ -1,21 +1,20 @@
 package com.br.stl.model.entity;
 
 import java.util.Date;
+import java.util.Set;
 
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
+
 
 @Entity
 public class Cliente {
@@ -36,27 +35,16 @@ public class Cliente {
 	@Column(nullable = false)
 	private String telefone;
 	
-//	@JsonIgnore
-//	@Lob
-//	@Basic(fetch = FetchType.LAZY)
-//	private byte[] imagem;
-	
-//	@JsonInclude
-//	@Transient
-//	private String imagemBase64;
-	
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;
 
-//	public String getImagemBase64() {
-//		return imagemBase64;
-//	}
-//
-//	public void setImagemBase64(String imagemBase64) {
-//		this.imagemBase64 = imagemBase64;
-//	}
 
+	@JsonIgnore
+	@OneToMany(orphanRemoval = true, fetch = FetchType.LAZY)
+	private Set<Imagem> imagens;
+	
+	
 	//Campos obrigaotiros para cirar um cliente
 	public static Cliente createInstance(String nome, String cpf, String telefone) {
 		Cliente c = new Cliente();
@@ -65,6 +53,7 @@ public class Cliente {
 		c.setTelefone(telefone);
 		return c;
 	}
+
 	
 	public Long getId() {
 		return id;
@@ -106,14 +95,6 @@ public class Cliente {
 		this.telefone = telefone;
 	}
 
-//	public byte[] getImagem() {
-//		return imagem;
-//	}
-//
-//	public void setImagem(byte[] imagem) {
-//		this.imagem = imagem;
-//	}
-
 	public Date getDataNascimento() {
 		return dataNascimento;
 	}
@@ -121,6 +102,14 @@ public class Cliente {
 	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
-	
-	
+
+	public Set<Imagem> getImagens() {
+		return imagens;
+	}
+
+	public void setImagens(Set<Imagem> imagens) {
+		this.imagens = imagens;
+	}
+
+		
 }
