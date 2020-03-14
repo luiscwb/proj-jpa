@@ -15,7 +15,7 @@ import com.br.stl.util.Uteis;
 
 
 @Entity
-public class Imagem {
+public class Imagen {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,7 +23,7 @@ public class Imagem {
 	
 	@Lob
 	@Column(nullable = false)
-	private String imagem;
+	private String base64;
 
 	@Column(nullable = false)
 	private String descricao;
@@ -31,20 +31,20 @@ public class Imagem {
 	@Temporal(TemporalType.DATE)
 	private Date inclussao;
 	
-	@Column(name = "hash_imagem", length = 32, nullable = false, unique = true)
-	private String hashImagem;
+	@Column(name = "hash_imagen", length = 32, nullable = false, unique = true)
+	private String hashImagen;
 
 	// 1: Imagens do sistema
 	// 2: Imagens de usuario
 	@Column(nullable = false)
 	int tipo;
 	
-	public static Imagem createInstance(String descricao, String base64, int tipo) {
-		Imagem img = new Imagem();
+	public static Imagen createInstance(String descricao, String base64, int tipo) {
+		Imagen img = new Imagen();
 		img.setDescricao(descricao);
-		img.setHashImagem(Uteis.getMD5Hash(base64));
+		img.setHashImagen(Uteis.getMD5Hash(base64));
 		img.setInclussao(new Date());
-		img.setImagem(base64);
+		img.setBase64(base64);
 		img.setTipo(tipo);
 		
 		return img;
@@ -66,12 +66,12 @@ public class Imagem {
 		this.id = id;
 	}
 
-	public String getImagem() {
-		return imagem;
+	public String getBase64() {
+		return base64;
 	}
 
-	public void setImagem(String imagem) {
-		this.imagem = imagem;
+	public void setBase64(String imagen) {
+		this.base64 = imagen;
 	}
 
 
@@ -91,23 +91,23 @@ public class Imagem {
 		this.inclussao = inclussao;
 	}
 
-	public String getHashImagem() {
-		return hashImagem;
+	public String getHashImagen() {
+		return hashImagen;
 	}
 
-	public void setHashImagem(String hashImagem) {
-		this.hashImagem = hashImagem;
+	public void setHashImagen(String hashImagen) {
+		this.hashImagen = hashImagen;
 	}
 
 	//Importante este construtor para devolver listas de objetos no CRUDREPOSITORY. Nao usar diretamente
-	public Imagem(Long id, String descricao, Date inclussao) {
+	public Imagen(Long id, String descricao, Date inclussao) {
 		super();
 		this.id = id;
 		this.descricao = descricao;
 		this.inclussao = inclussao;
 	}
 
-	public Imagem() {
+	public Imagen() {
 		super();
 	}
 	

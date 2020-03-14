@@ -42,7 +42,7 @@ public class Cliente {
 
 	@JsonIgnore
 	@OneToMany(orphanRemoval = true, fetch = FetchType.LAZY)
-	private Set<Imagem> imagens;
+	private Set<Imagen> imagens;
 	
 	
 	//Campos obrigaotiros para cirar um cliente
@@ -103,11 +103,11 @@ public class Cliente {
 		this.dataNascimento = dataNascimento;
 	}
 
-	public Set<Imagem> getImagens() {
+	public Set<Imagen> getImagens() {
 		return imagens;
 	}
 
-	public void setImagens(Set<Imagem> imagens) {
+	public void setImagens(Set<Imagen> imagens) {
 		this.imagens = imagens;
 	}
 

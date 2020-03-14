@@ -16,25 +16,13 @@ public class StylebookController {
 	@Autowired
 	StylebookService service;
 	
-	
-//	@GetMapping("/findall")
-//	public List<Cliente> findAll() {
-//		return service.recuperarClientes();
-//	}
-	
+
 	@PostMapping("/save")
 	public void salvarCliente( @RequestBody Cliente cli) {
-		//System.out.println("Cliente: " + cli.getNomeCompleto());
-		//System.out.println("Cliente: " + cli.getImagemBase64());
 		service.salvarCliente(cli);
 	}
 
-//	@PostMapping("/saveimg")
-//	public void salvarClienteImagem( @RequestBody ClienteImagem cliImg) {
-//		//System.out.println("Cliente: " + cli.getNomeCompleto());
-//		//System.out.println("Cliente: " + cli.getImagemBase64());
-//		service.salvarImagem(cliImg);
-//	}
+
 
 
 }

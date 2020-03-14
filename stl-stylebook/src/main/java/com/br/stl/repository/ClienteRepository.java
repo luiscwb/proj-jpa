@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import com.br.stl.model.entity.Cliente;
-import com.br.stl.model.entity.Imagem;
+import com.br.stl.model.entity.Imagen;
 
 public interface ClienteRepository extends CrudRepository<Cliente, Long> {
 	
@@ -16,14 +16,14 @@ public interface ClienteRepository extends CrudRepository<Cliente, Long> {
 	public Cliente findByCpf( @Param("cpf") String cpf );
 	
 	
-	// Usa construtor costumizado de imagem
+	// Usa construtor costumizado de imagen
 	@Query(
 	value = 	
-	" SELECT new Imagem(im.id,im.descricao,im.inclussao)" +
+	" SELECT new Imagen(im.id,im.descricao,im.inclussao)" +
 	" FROM 	 Cliente cli JOIN cli.imagens im" +
 	" WHERE  cli.id = :id" 		
 	)
-	public List<Imagem> findAllImagesByClientId( @Param("id") Long idCliente);
+	public List<Imagen> findImagesByClientId( @Param("id") Long idCliente);
 
 	
 	@Modifying
@@ -32,13 +32,13 @@ public interface ClienteRepository extends CrudRepository<Cliente, Long> {
 
 	
 	@Modifying
-	@Query(value = "Insert Into cliente_imagens (cliente_id, imagens_id) values (:idCliente, :idImagem)", nativeQuery = true)
-	public void addRelationImage( @Param("idCliente") Long idCliente, @Param("idImagem") Long idImagem );
+	@Query(value = "Insert Into cliente_imagens (cliente_id, imagens_id) values (:idCliente, :idImagen)", nativeQuery = true)
+	public void addImageForClient( @Param("idCliente") Long idCliente, @Param("idImagen") Long idImagen );
 	
 	
 	@Modifying
-	@Query(value = "Delete From cliente_imagens Where cliente_id = :idCliente And imagens_id = :idImagem", nativeQuery = true)
-	public void delRelationImage( @Param("idCliente") Long idCliente, @Param("idImagem") Long idImagen );
+	@Query(value = "Delete From cliente_imagens Where cliente_id = :idCliente And imagens_id = :idImagen", nativeQuery = true)
+	public void delImageForClient( @Param("idCliente") Long idCliente, @Param("idImagen") Long idImagen );
 
 
 	
