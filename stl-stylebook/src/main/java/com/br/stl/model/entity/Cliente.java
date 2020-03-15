@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -29,20 +30,41 @@ public class Cliente {
 	@Column(nullable = false, unique = true)
 	private String cpf;
 	
+	@Column(nullable = false)
+	private String telefone;	
+	
 	@Column
 	private String endereco;
-	
-	@Column(nullable = false)
-	private String telefone;
-	
+
 
 	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;
 
-
+	
+	@Temporal(TemporalType.DATE)
+	private Date dataCadastro;
+	
+	@Column
+	private String email;
+	
+	@Column
+	private int estadoCivil;
+	
+	@Column
+	private boolean filhos;
+	
+	@Column
+	private String profissao;
+	
+	
+	@JsonIgnore
+	@OneToOne(orphanRemoval = true, fetch = FetchType.LAZY)
+	private Imagem fotografia;
+	
+	
 	@JsonIgnore
 	@OneToMany(orphanRemoval = true, fetch = FetchType.LAZY)
-	private Set<Imagen> imagens;
+	private Set<Imagem> dossies;
 	
 	
 	//Campos obrigaotiros para cirar um cliente
@@ -51,10 +73,61 @@ public class Cliente {
 		c.setCpf(cpf);
 		c.setNomeCompleto(nome);
 		c.setTelefone(telefone);
+		c.setDataCadastro(new Date());
 		return c;
 	}
 
 	
+	public Date getDataCadastro() {
+		return dataCadastro;
+	}
+
+
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
+	}
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+	public int getEstadoCivil() {
+		return estadoCivil;
+	}
+
+
+	public void setEstadoCivil(int estadoCivil) {
+		this.estadoCivil = estadoCivil;
+	}
+
+
+	public boolean isFilhos() {
+		return filhos;
+	}
+
+
+	public void setFilhos(boolean filhos) {
+		this.filhos = filhos;
+	}
+
+
+	public String getProfissao() {
+		return profissao;
+	}
+
+
+	public void setProfissao(String profissao) {
+		this.profissao = profissao;
+	}
+
+
 	public Long getId() {
 		return id;
 	}
@@ -103,13 +176,17 @@ public class Cliente {
 		this.dataNascimento = dataNascimento;
 	}
 
-	public Set<Imagen> getImagens() {
-		return imagens;
+
+	public Set<Imagem> getDossies() {
+		return dossies;
 	}
 
-	public void setImagens(Set<Imagen> imagens) {
-		this.imagens = imagens;
+
+	public void setDossies(Set<Imagem> dossies) {
+		this.dossies = dossies;
 	}
+
+
 
 		
 }

@@ -1,14 +1,25 @@
 package com.br.stl.service;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.br.stl.model.entity.Caracteristica;
 import com.br.stl.model.entity.Cliente;
-import com.br.stl.model.entity.Imagen;
+import com.br.stl.model.entity.Consultora;
+import com.br.stl.model.entity.Dossie;
+import com.br.stl.model.entity.Imagem;
+import com.br.stl.repository.CaracteristicaRepository;
 import com.br.stl.repository.ClienteRepository;
-import com.br.stl.repository.ImagenRepository;
+import com.br.stl.repository.ConsultoraRepository;
+import com.br.stl.repository.DossieRepository;
+import com.br.stl.repository.ImagemRepository;
 
 @Service
 public class StylebookService {
@@ -17,53 +28,141 @@ public class StylebookService {
 	ClienteRepository repoCliente;
 
 	@Autowired
-	ImagenRepository repoImagen;
+	ImagemRepository repoImagem;
 	
+	@Autowired
+	ConsultoraRepository repoConsultora;
+
+	@Autowired
+	DossieRepository repoDossie;
+	
+	@Autowired
+	CaracteristicaRepository repoCaracteristica;
+	
+	
+	//Testes e validacoes
+	public CaracteristicaRepository getRepoCaracteristica() {
+		return repoCaracteristica;
+	}
+
+	//Testes e validacoes
+	public ConsultoraRepository getRepoConsultora() {
+		return repoConsultora;
+	}
+	
+	//Testes e validacoes
+	public DossieRepository getRepoDossie() {
+		return repoDossie;
+	}
+
 	//Testes e validacoes
 	public ClienteRepository getRepoCliente() {
 		return repoCliente;
 	}
 	
 	//Testes e validacoes
-	public ImagenRepository getRepoImagen() {
-		return repoImagen;
+	public ImagemRepository getRepoImagem() {
+		return repoImagem;
 	}
 	
 	//Testes e validacoes
 	@Transactional
 	public void apagarBase() {
-		repoCliente.delAllRelationImage();
-		repoImagen.deleteAll();
+		repoCaracteristica.deleteAll();
+		repoImagem.deleteAll();
 		repoCliente.deleteAll();
+		repoConsultora.deleteAll();
 	}
 	
+	//------------------------------------------------------------------------------------------------	
+	// CARACTERISTICA
 	
+	public void salvarCaracteristica(Caracteristica car) {
+		repoCaracteristica.save(car);
+	}
+	
+ 	@Transactional
+	public void salvarImagemDeCaracteristica(Caracteristica car, Imagem img) {
+ 		repoCaracteristica.addImageForCaracteristica( car.getId(), img.getId());
+	}
+ 	
+	public List<Caracteristica> recuperarCaracteristicas() {
+		Iterable<Caracteristica> iterCar = repoCaracteristica.findAll();
+		return StreamSupport.stream(iterCar.spliterator(), false).collect(Collectors.toList());
+	}
+	
+	public Caracteristica recuperarCaracteristicaPorId(Long id) {
+		Optional<Caracteristica> optCar = repoCaracteristica.findById(id);
+		if ( optCar.isPresent() )
+			return optCar.get();
+		else
+			return null;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	// DOSSIE
+	
+	public void salvarDossie(Dossie dos) {
+		repoDossie.save(dos);
+	}
+	
+ 	@Transactional
+	public void salvarImagemDeDossie(Dossie dos, Imagem img) {
+ 		repoDossie.addImageForDossie( dos.getId(), img.getId());
+	}
+ 	
+ 	@Transactional
+	public void exlcuirImagemDeDossie(Dossie dos, Imagem img) {
+ 		repoDossie.delImageForDossie( dos.getId(), img.getId() );
+		repoImagem.deleteById( img.getId() );
+	}
+ 	
+ 	public List<Imagem> recuperarImagensPorDeDossieId( Long id) {
+ 		return repoDossie.findImagesByDossieId(id);
+ 	}
+ 	
+	//------------------------------------------------------------------------------------------------
+	// CONSULTORA
+ 	
+	public void salvarConsultora(Consultora cons) {
+		repoConsultora.save(cons);
+	}
+
+	public List<Cliente> recuperarClientesPorConsultoraId(Long id) {
+		return repoConsultora.findClientesByConsultoraId(id);
+ 	}
+	
+	
+	//------------------------------------------------------------------------------------------------
+	// CLIENTE
+	
+	public Cliente recuperarClientePorCpf( String cpf) {
+		return repoCliente.findByCpf(cpf);
+	}
 	
  	public void salvarCliente(Cliente cli) {
 		repoCliente.save(cli);
 	}
 	
- 	public void salvarImagen(Imagen img) {
-		repoImagen.save(img);
-	}
-	
- 	@Transactional
-	public void salvarImagenParaCliente(Cliente cli, Imagen img) {
-		repoCliente.addImageForClient( cli.getId(), img.getId());
-	}
-	
- 	@Transactional
-	public void exlcuirImagenParaCliente(Cliente cli, Imagen img) {
-		repoCliente.delImageForClient( cli.getId(), img.getId() );
-		repoImagen.deleteById( img.getId() );
-	}
- 	
- 	public void exluirCliente(Cliente cli) {
- 		repoCliente.deleteById( cli.getId() );
+ 	public void exluirClientePorId(Long id) {
+ 		repoCliente.deleteById(id);
  	}
 	
-	public Cliente recuperarClientePorCpf( String cpf) {
-		return repoCliente.findByCpf(cpf);
+ 	public void exluirClientePorCpf(String cpf) {
+ 		repoCliente.deleteByCpf(cpf);
+ 	}
+ 	
+ 	
+	//------------------------------------------------------------------------------------------------
+ 	// IMAGEM
+ 	
+ 	public Imagem salvarImagem(Imagem img) {
+		return repoImagem.save(img);
 	}
+ 	
+ 	public void excluirImagemPorId(Long id) {
+ 		repoImagem.deleteById(id);
+ 	}
+ 	
 	
 }

@@ -15,7 +15,7 @@ import com.br.stl.util.Uteis;
 
 
 @Entity
-public class Imagen {
+public class Imagem {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,17 +32,17 @@ public class Imagen {
 	private Date inclussao;
 	
 	@Column(name = "hash_imagen", length = 32, nullable = false, unique = true)
-	private String hashImagen;
+	private String hashImagem;
 
-	// 1: Imagens do sistema
-	// 2: Imagens de usuario
+	// 1: Imagems do sistema
+	// 2: Imagems de usuario
 	@Column(nullable = false)
 	int tipo;
 	
-	public static Imagen createInstance(String descricao, String base64, int tipo) {
-		Imagen img = new Imagen();
+	public static Imagem createInstance(String descricao, String base64, int tipo) {
+		Imagem img = new Imagem();
 		img.setDescricao(descricao);
-		img.setHashImagen(Uteis.getMD5Hash(base64));
+		img.setHashImagem(Uteis.getMD5Hash(base64));
 		img.setInclussao(new Date());
 		img.setBase64(base64);
 		img.setTipo(tipo);
@@ -91,23 +91,23 @@ public class Imagen {
 		this.inclussao = inclussao;
 	}
 
-	public String getHashImagen() {
-		return hashImagen;
+	public String getHashImagem() {
+		return hashImagem;
 	}
 
-	public void setHashImagen(String hashImagen) {
-		this.hashImagen = hashImagen;
+	public void setHashImagem(String hashImagem) {
+		this.hashImagem = hashImagem;
 	}
 
 	//Importante este construtor para devolver listas de objetos no CRUDREPOSITORY. Nao usar diretamente
-	public Imagen(Long id, String descricao, Date inclussao) {
+	public Imagem(Long id, String descricao, Date inclussao) {
 		super();
 		this.id = id;
 		this.descricao = descricao;
 		this.inclussao = inclussao;
 	}
 
-	public Imagen() {
+	public Imagem() {
 		super();
 	}
 	
